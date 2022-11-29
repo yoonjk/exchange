@@ -20,10 +20,17 @@ public class ExchangeService {
   public List<Exchange> searchCurUnit(String curUnit, String pageNo) {
     List<Exchange> exchangeList= new ArrayList<Exchange>();
     HashMap<String, Object> params = new HashMap<String, Object>();
+    int page = 0;
     try {
+      // startPage = 1 ~ ..
+      page = (Integer.valueOf(pageNo) - 1) * Integer.valueOf("5");
+      
+      if (page < 1) 
+        page = 1;
+
       params.put("cur_unit", curUnit);
-      params.put("page_no", Integer.valueOf(pageNo));
-      params.put("page_size", Integer.valueOf("4"));
+      params.put("page_no", page );
+      params.put("page_size", Integer.valueOf("5"));
       exchangeList = commonDao.selectList("searchCurUnit", params);
     } catch ( Exception e) {
       throw new RuntimeException(e);

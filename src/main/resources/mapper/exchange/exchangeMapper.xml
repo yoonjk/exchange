@@ -39,8 +39,9 @@
                 cur_nm
             from exchange
             where cur_unit = #{cur_unit}
+           
        ) R1
-     limit #{page_size, jdbcType = INTEGER} offset #{page_no, jdbcType = INTEGER}
+       limit #{page_size, jdbcType = INTEGER} offset #{page_no , jdbcType = INTEGER} 
     </select>
 
     <insert id="upsertExchange" parameterType="com.demo.microservices.exchange.domain.Exchange">
