@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.microservices.exchange.controller.dto.ExchangeDto;
@@ -40,8 +41,9 @@ public class ExchangeController {
 
 
   @GetMapping("/exchange/{curUnit}/{pageNo}")
-  public List<Exchange> searchExchangeCurUnit(@PathVariable String curUnit, @PathVariable String pageNo) {
-    return exchangeService.searchCurUnit(curUnit, pageNo);
+  public List<Exchange> searchExchangeCurUnit(@PathVariable String curUnit, @PathVariable int pageNo, 
+  @RequestParam(value = "pageSize", required = false, defaultValue="10") int pageSize) {
+    return exchangeService.searchCurUnit(curUnit, pageNo, pageSize);
   }
 
   @PostMapping("/exchange")

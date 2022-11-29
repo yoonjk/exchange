@@ -17,20 +17,20 @@ public class ExchangeService {
   CommonDao commonDao;
  
 
-  public List<Exchange> searchCurUnit(String curUnit, String pageNo) {
+  public List<Exchange> searchCurUnit(String curUnit, int pageNo, int pageSize) {
     List<Exchange> exchangeList= new ArrayList<Exchange>();
     HashMap<String, Object> params = new HashMap<String, Object>();
     int page = 0;
     try {
       // startPage = 1 ~ ..
-      page = (Integer.valueOf(pageNo) - 1) * Integer.valueOf("5");
+      page = (Integer.valueOf(pageNo) - 1) * Integer.valueOf(pageSize);
       
       if (page < 1) 
         page = 1;
 
       params.put("cur_unit", curUnit);
       params.put("page_no", page );
-      params.put("page_size", Integer.valueOf("5"));
+      params.put("page_size", Integer.valueOf(pageSize));
       exchangeList = commonDao.selectList("searchCurUnit", params);
     } catch ( Exception e) {
       throw new RuntimeException(e);
