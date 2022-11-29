@@ -15,16 +15,18 @@
        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="exchange">
-    <select id="findByCurUnit" parameterType="string" resultType="com.demo.microservices.exchange.domain.Exchange">
+    <select id="findByCurUnit" parameterType="map"  resultType="com.demo.microservices.exchange.domain.Exchange">
         select 
-            base_dt,
-            cur_unit,
-            ttb,
-            tts,
-            deal_bas_r,
-            cur_nm
+                base_dt ,
+                cur_unit ,
+                ttb,
+                tts,
+                deal_bas_r,
+                cur_nm
         from exchange
         where cur_unit = #{curUnit}
+        and base_dt between #{startDate} and #{endDate}
+        
     </select>
 
     <select id="searchCurUnit" parameterType="map" resultType="com.demo.microservices.exchange.domain.Exchange">
@@ -46,19 +48,19 @@
 
     <insert id="upsertExchange" parameterType="com.demo.microservices.exchange.domain.Exchange">
         insert into exchange ( cur_unit, base_dt, ttb, tts, deal_bas_r, cur_nm) 
-        values (#{cur_unit},#{base_dt}, #{ttb}, #{tts}, #{deal_bas_r},  #{cur_nm})
+        values (#{curUnit},#{baseDt}, #{ttb}, #{tts}, #{dealBasR},  #{curNm})
         ON DUPLICATE KEY UPDATE
                    ttb = #{ttb},
                    tts = #{tts},
-                   deal_bas_r = #{deal_bas_r}
-                   cur_nm = ${cur_nm}
+                   deal_bas_r = #{dealBasR},
+                   cur_nm = #{curNm}
     </insert>
 
 
      <delete id="deleteExchange" parameterType="com.demo.microservices.exchange.domain.Exchange">
         delete from exchange
-        where cur_unit = #{cur_unit}
-        and   base_dt = #{base_dt}
+        where cur_unit = #{curUnit}
+        and   base_dt = #{baseDt}
     </delete>
    
 </mapper> 

@@ -1,9 +1,9 @@
 package com.demo.microservices.exchange.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +19,7 @@ import com.demo.microservices.exchange.controller.dto.ExchangeDto;
 import com.demo.microservices.exchange.domain.Exchange;
 import com.demo.microservices.exchange.service.ExchangeService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,19 +28,27 @@ public class ExchangeController {
   @Autowired 
   ExchangeService exchangeService;
   
+  @ApiOperation(value = "dummy", notes = "display dummy data")
   @GetMapping("/")
   public ExchangeDto hello() {
     return ExchangeDto.builder()
-    .cur_unit("USD")
-    .base_dt("yyyymmdd")
+    .curUnit("USD")
+    .baseDt("yyyymmdd")
     .tts("298.46")
     .ttb("292.56") 
-    .deal_bas_r("295.51")
-    .cur_nm("달러")
+    .dealBasR("295.51")
+    .curNm("dollar")
     .build();
   }
+  @ApiOperation(value = "search Cur Unit and expose API to APIC", notes = "search current from startDate to endDate")
+  @GetMapping("/exchange/{curUnit}")
+  public List<Exchange> findByCurUnit(@PathVariable String curUnit, 
+  @RequestParam(value = "startDate", required = false) String startDate,
+  @RequestParam(value = "endDate", required = false) String endDate) {
+    return exchangeService.findByCurUnit(curUnit, startDate, endDate);
+  }
 
-
+  @ApiOperation(value = "search Cur Unit and expose API to APIC", notes = "Paging search")
   @GetMapping("/exchange/{curUnit}/{pageNo}")
   public List<Exchange> searchExchangeCurUnit(@PathVariable String curUnit, @PathVariable int pageNo, 
   @RequestParam(value = "pageSize", required = false, defaultValue="10") int pageSize) {

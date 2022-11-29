@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchange
+  labels:
+    app: exchange
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exchange
+  template:
+    metadata:
+      labels:
+        app: exchange
+    spec:
+      containers:
+      - name: exchange
+        image: nexweb1/exchange
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_SERVER
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_PORT
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_PASSWORD
+        - name: SERVLET_CONTEXT_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: SERVLET_CONTEXT_PATH

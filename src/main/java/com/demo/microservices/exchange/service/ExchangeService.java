@@ -3,7 +3,6 @@ package com.demo.microservices.exchange.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +10,34 @@ import org.springframework.stereotype.Service;
 import com.demo.microservices.exchange.dao.CommonDao;
 import com.demo.microservices.exchange.domain.Exchange;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service 
 public class ExchangeService {
   @Autowired 
   CommonDao commonDao;
  
+
+  public List<Exchange> findByCurUnit(String curUnit, String startDate, String endDate) {
+    List<Exchange> exchangeList= new ArrayList<Exchange>();
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    try {
+      // startPage = 1 ~ ..
+  
+      params.put("curUnit", curUnit);
+      params.put("startDate", startDate );
+      params.put("endDate", endDate);
+
+      
+      exchangeList = commonDao.selectList("findByCurUnit", params);
+      log.info("exchangeList:{}", exchangeList);
+    } catch ( Exception e) {
+      throw new RuntimeException(e);
+    }
+    return exchangeList;
+  }
+
 
   public List<Exchange> searchCurUnit(String curUnit, int pageNo, int pageSize) {
     List<Exchange> exchangeList= new ArrayList<Exchange>();
