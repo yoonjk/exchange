@@ -1,70 +1,61 @@
 package com.demo.microservices.exchange.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.microservices.exchange.dao.CommonDao;
 import com.demo.microservices.exchange.domain.Exchange;
-import com.demo.microservices.exchange.repository.ExchangeRepository;
 
 @Service 
 public class ExchangeService {
   @Autowired 
-  ExchangeRepository exchangeRepository;
-  
-  public List<Exchange> findByAll() {
-    return exchangeRepository.findAll();
-  }
+  CommonDao commonDao;
+ 
 
-  public Exchange findById(Long Id) {
-    Optional<Exchange> exchange = exchangeRepository.findById(Id);
-
-    if (exchange.isPresent()) {
-      return exchange.get();
+  public List<Exchange> searchCurUnit(String curUnit, String pageNo) {
+    List<Exchange> exchangeList= new ArrayList<Exchange>();
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    try {
+      params.put("cur_unit", curUnit);
+      params.put("page_no", Integer.valueOf(pageNo));
+      params.put("page_size", Integer.valueOf("4"));
+      exchangeList = commonDao.selectList("searchCurUnit", params);
+    } catch ( Exception e) {
+      throw new RuntimeException(e);
     }
-
-    return null;
-  }
-  public Exchange findByCurUnit(String curUnit) {
-    Exchange exchange = exchangeRepository.findByCur_unit(curUnit);
-
-    return exchange;
+    return exchangeList;
   }
 
-  public boolean saveExchange(Exchange exchange) {
+
+  public int upSertExchange(Exchange exchange) {
   
-    Exchange exch = exchangeRepository.save(exchange);
-
-    if (exch != null) {
-      return true;
-    } else {
-      return false;
+    int rc = 0;
+    try {
+      rc = commonDao.insert("upsertExchange", exchange);
+    } catch ( Exception e) {
+      throw new RuntimeException(e);
     }
-  }
-
-  public boolean upSertExchange(Exchange exchange) {
-  
-    Exchange exch = findById(exchange.getId());
-
-    if (exch != null) {
-      return saveExchange(exchange);
-    } else {
-      return false;
-    }
+    return rc;
   }  
 
-  public boolean deleteExchange(Long id) {
+  public int deleteExchange(String curUnit, String baseDate) {
   
-    Exchange exch = findById(id);
-
-    if (exch != null) {
-      exchangeRepository.delete(exch);
-      return true;
-    } else {
-      return false;
-    } 
+    int rc = 0;
+    Exchange exchange = Exchange.builder()
+                          .cur_unit(curUnit)
+                          .base_dt(baseDate)
+                          .build();
+    try {
+      rc = commonDao.delete("deleteExchange", exchange);
+    } catch ( Exception e) {
+      throw new RuntimeException(e);
+    }
+    return rc;
 
   }  
 }
