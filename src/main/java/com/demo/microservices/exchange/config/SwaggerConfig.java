@@ -29,9 +29,9 @@ public class SwaggerConfig  {
     }
 
     private ApiInfo apiInfo() {
-        String description = "Welcome bootcamp Company";
+        String description = "Welcome Cloud Pak for Integration Practicum ";
         return new ApiInfoBuilder()
-                .title("Customer Service")
+                .title("Exchange Service")
                 .description(description)
                 .version("1.0")
                 .build();
