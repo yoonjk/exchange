@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11
+FROM docker.io/library/openjdk:8-jre-alpine
 ENV APP_FILE app.jar
 ENV APP_HOME /usr/apps
 EXPOSE 8080

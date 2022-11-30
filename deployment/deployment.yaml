@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: exchange
-        image: nexweb1/exchange
+        image: nexweb1/exchange:jdk8
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
