@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk/openjdk11
 ENV APP_FILE app.jar
 ENV APP_HOME /usr/apps
 EXPOSE 8080
