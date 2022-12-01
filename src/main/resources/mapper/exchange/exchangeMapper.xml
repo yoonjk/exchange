@@ -62,5 +62,13 @@
         where cur_unit = #{curUnit}
         and   base_dt = #{baseDt}
     </delete>
-   
+
+    <insert id="bulkloadExchange" parameterType="java.util.Map">
+        INSERT INTO exchange
+        (cur_unit, base_dt, ttb, tts, deal_bas_r,cur_nm)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.curUnit}, #{item.baseDt}, #{item.ttb}, #{item.tts}, #{item.dealBasR}, #{curNm})       
+        </foreach>
+    </insert> 
 </mapper> 

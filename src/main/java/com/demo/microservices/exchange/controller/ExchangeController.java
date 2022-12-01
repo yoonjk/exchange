@@ -74,4 +74,10 @@ public class ExchangeController {
     exchangeService.deleteExchange(curUnit, baseDate);
     return new ResponseEntity<>("Success", HttpStatus.OK);
   }
+  @ApiOperation(value = "bulkload Exchange daily", notes = "bulkload Exchange daily")
+  @DeleteMapping("/exchange/bulkload/{baseDate}")
+  public ResponseEntity<String> bulkloadExchange(@RequestBody List<Exchange> bulkExchanges, @PathVariable String baseDate) {
+    exchangeService.bulkLoadExchange(bulkExchanges);
+    return new ResponseEntity<>("Success", HttpStatus.OK);
+  }  
 }

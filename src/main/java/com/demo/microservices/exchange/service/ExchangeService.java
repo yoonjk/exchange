@@ -3,6 +3,7 @@ package com.demo.microservices.exchange.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,18 @@ public class ExchangeService {
   @Autowired 
   CommonDao commonDao;
  
-
+  public int bulkLoadExchange(List<Exchange> list) {
+    int count = 0;
+    Map<String, Object> map = new HashMap<>();
+    map.put("list", list);
+    try { 
+    // 실행 결과 row 갯수를 리턴합니다.
+      count += commonDao.insert("bulkloadExchange", map);
+  } catch ( Exception e) {
+    throw new RuntimeException(e);
+  }
+  return count;
+}
   public List<Exchange> findByCurUnit(String curUnit, String startDate, String endDate) {
     List<Exchange> exchangeList= new ArrayList<Exchange>();
     HashMap<String, Object> params = new HashMap<String, Object>();
