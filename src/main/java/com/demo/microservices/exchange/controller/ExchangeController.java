@@ -1,6 +1,5 @@
 package com.demo.microservices.exchange.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +74,7 @@ public class ExchangeController {
     return new ResponseEntity<>("Success", HttpStatus.OK);
   }
   @ApiOperation(value = "bulkload Exchange daily", notes = "bulkload Exchange daily")
-  @DeleteMapping("/exchange/bulkload/{baseDate}")
+  @PostMapping("/exchange/bulkload/{baseDate}")
   public ResponseEntity<String> bulkloadExchange(@RequestBody List<Exchange> bulkExchanges, @PathVariable String baseDate) {
     exchangeService.bulkLoadExchange(bulkExchanges);
     return new ResponseEntity<>("Success", HttpStatus.OK);
