@@ -1,5 +1,7 @@
 package com.demo.microservices.exchange.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Exchange {
+public class Exchange implements Serializable{
   String curUnit; // USD,
   String baseDt;
   String ttb;      //292.56 보낼때

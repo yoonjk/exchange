@@ -1,9 +1,11 @@
 package com.demo.microservices.exchange.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,10 +75,14 @@ public class ExchangeController {
     exchangeService.deleteExchange(curUnit, baseDate);
     return new ResponseEntity<>("Success", HttpStatus.OK);
   }
+
   @ApiOperation(value = "bulkload Exchange daily", notes = "bulkload Exchange daily")
-  @PostMapping("/exchange/bulkload/{baseDate}")
-  public ResponseEntity<String> bulkloadExchange(@RequestBody List<Exchange> bulkExchanges, @PathVariable String baseDate) {
+  @PostMapping(path = "/exchange/bulkload/{baseData}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<String> bulkloadExchange(@PathVariable String baseData, @RequestBody ArrayList<Exchange> bulkExchanges) {
     exchangeService.bulkLoadExchange(bulkExchanges);
+    log.info("data:{}", bulkExchanges);
+
+
     return new ResponseEntity<>("Success", HttpStatus.OK);
   }  
 }
