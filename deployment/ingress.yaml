@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: exchange-svc
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules: 
+  - host: exchange.169.51.195.164.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: exchange
+            port:
+              number: 8080
+ 

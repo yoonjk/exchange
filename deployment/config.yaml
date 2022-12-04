@@ -3,9 +3,11 @@ kind: ConfigMap
 metadata:
   name: config
 data:
+  # Tomcat Server Port
+  SERVER_PORT: "8080"
   SERVLET_CONTEXT_PATH: "/"
-# MYSQL DB
-  DB_SERVER: db-m-practicum-mariadb
+  # MYSQL DB
+  DB_SERVER: mysql
   DB_PORT: "3306"
   DB_USERNAME: root
-  DB_PASSWORD: Passw0rd!
+  DB_PASSWORD: admin1234
