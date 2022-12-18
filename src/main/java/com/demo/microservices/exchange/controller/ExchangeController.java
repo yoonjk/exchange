@@ -41,6 +41,13 @@ public class ExchangeController {
     .curNm("dollar")
     .build();
   }
+
+  @ApiOperation(value = "search all", notes = "select all")
+  @GetMapping("/exchange")
+  public List<Exchange> exchangeAll() {
+    return exchangeService.exchangeAll();
+  }
+
   @ApiOperation(value = "search Cur Unit and expose API to APIC", notes = "search current from startDate to endDate")
   @GetMapping("/exchange/{curUnit}")
   public List<Exchange> findByCurUnit(@PathVariable String curUnit, 

@@ -15,6 +15,16 @@
        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="exchange">
+    <select id="exchangeAll" resultType="com.demo.microservices.exchange.domain.Exchange">
+        select 
+                base_dt ,
+                cur_unit ,
+                ttb,
+                tts,
+                deal_bas_r,
+                cur_nm
+        from exchange     
+    </select>
     <select id="findByCurUnit" parameterType="map"  resultType="com.demo.microservices.exchange.domain.Exchange">
         select 
                 base_dt ,

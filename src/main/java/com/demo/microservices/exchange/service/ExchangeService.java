@@ -31,6 +31,19 @@ public class ExchangeService {
   }
   return count;
 }
+
+public List<Exchange> exchangeAll() {
+  List<Exchange> exchangeList= new ArrayList<Exchange>();
+
+  try {
+    exchangeList = commonDao.selectList("exchangeAll");
+    log.info("exchangeList:{}", exchangeList);
+  } catch ( Exception e) {
+    throw new RuntimeException(e);
+  }
+  return exchangeList;
+}
+
   public List<Exchange> findByCurUnit(String curUnit, String startDate, String endDate) {
     List<Exchange> exchangeList= new ArrayList<Exchange>();
     HashMap<String, Object> params = new HashMap<String, Object>();
